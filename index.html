@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>OWN Retos</title>
+<meta name="theme-color" content="#FFF7E5">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2714%27 fill=%27%23000%27/%3E%3Crect x=%2729%27 y=%2716%27 width=%276%27 height=%2732%27 fill=%27%23FFF7E5%27 transform=%27skewX(-8)%27/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+/* ===== CONFIGURACIÓN DE COLORES: solo negro y crema ===== */
+:root{ --n:#000000; --c:#FFF7E5; }
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--c);color:var(--n)}
+body{font-family:Inter,system-ui,-apple-system,sans-serif;min-height:100vh;-webkit-font-smoothing:antialiased;padding-bottom:env(safe-area-inset-bottom)}
+button,input,select,textarea{font:inherit;color:inherit}
+.display{font-family:Anton,Impact,sans-serif;text-transform:uppercase;font-style:italic;letter-spacing:.01em;line-height:.95}
+.wrap{max-width:760px;margin:0 auto;padding:0 18px}
+
+/* Cabecera */
+header{position:sticky;top:0;z-index:20;background:var(--c);border-bottom:3px solid var(--n)}
+.head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px}
+.brand{display:flex;align-items:center;gap:10px;background:none;border:0;padding:0;cursor:pointer;color:var(--n)}
+.brand .logo{height:34px;width:auto;display:block;flex:none}
+.brand span{font-size:26px;padding-left:10px;border-left:3px solid var(--n)}
+.iconbtn{text-decoration:none;color:var(--n);background:var(--c);border:3px solid var(--n);border-radius:999px;height:42px;min-width:42px;padding:0 14px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.iconbtn:active{transform:scale(.96)}
+.iconbtn.solid{background:var(--n);color:var(--c)}
+
+/* Portada */
+.hero{padding:28px 0 18px}
+.hero h1{font-size:clamp(44px,13vw,84px)}
+.hero p{margin-top:10px;font-weight:600;max-width:34ch}
+.grid{display:grid;grid-template-columns:1fr;gap:18px;padding:10px 0 40px}
+@media(min-width:620px){.grid{grid-template-columns:1fr 1fr}}
+.card{position:relative;display:block;width:100%;aspect-ratio:4/5;border:3px solid var(--n);border-radius:22px;overflow:hidden;background:var(--n);color:var(--c);cursor:pointer;text-align:left;text-decoration:none;transition:transform .15s}
+.card:active{transform:scale(.98)}
+.card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.15)}
+.card .shade{display:none}
+.card .art{position:absolute;inset:0}
+.card .info{position:absolute;left:0;right:0;bottom:0;padding:18px 20px 20px;background:var(--n);border-top:3px solid var(--c)}
+.card .tag{display:inline-block;background:var(--c);color:var(--n);font-weight:800;font-size:12px;letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;border-radius:999px;margin-bottom:10px}
+.card h2{font-size:clamp(38px,10vw,54px)}
+.card .meta{margin-top:8px;font-weight:600;font-size:14px;display:flex;justify-content:space-between;gap:10px}
+.card .go{position:absolute;top:16px;right:16px;width:48px;height:48px;border-radius:50%;background:var(--c);color:var(--n);display:grid;place-items:center;font-size:24px;font-weight:800}
+.empty{border:3px dashed var(--n);border-radius:22px;padding:30px;text-align:center;font-weight:600}
+
+/* Vista reto */
+.back{margin:18px 0 6px}
+.rtitle{font-size:clamp(46px,14vw,90px);margin-top:6px}
+.rdesc{font-weight:600;margin-top:8px}
+.stats{display:flex;gap:10px;margin:16px 0 4px;flex-wrap:wrap}
+.pill{border:3px solid var(--n);border-radius:999px;padding:6px 14px;font-weight:800;font-size:14px}
+
+/* Líder animado (#1) */
+.leader{position:relative;margin:22px 0 0;border:3px solid var(--n);border-radius:26px;overflow:hidden;background:var(--n);color:var(--c);min-height:520px;width:100%}
+.rays{position:absolute;left:50%;top:50%;width:190%;aspect-ratio:1;transform:translate(-50%,-50%);background:repeating-conic-gradient(var(--c) 0 2deg,var(--n) 2deg 15deg);animation:spin 18s linear infinite;border-radius:50%}
+@keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+.ring{position:absolute;left:50%;top:44%;width:62%;aspect-ratio:1;border-radius:50%;transform:translate(-50%,-50%);border:3px solid var(--c);animation:pulse 2.2s ease-out infinite;opacity:0}
+.ring.r2{animation-delay:1.1s}
+@keyframes pulse{0%{transform:translate(-50%,-50%) scale(.6);opacity:.9}100%{transform:translate(-50%,-50%) scale(1.5);opacity:0}}
+.leadin{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 20px}
+.leadin>*{position:relative}
+.namebox{background:var(--n);border:3px solid var(--c);border-radius:20px;padding:6px 16px 10px;margin-top:10px;max-width:100%}
+.crown{width:84px;filter:none;animation:bob 1.6s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-10px) rotate(4deg)}}
+.bigone{font-size:clamp(110px,34vw,170px);line-height:.85;margin-top:2px;background:var(--n);padding:0 18px;border-radius:16px;animation:beat 1.2s ease-in-out infinite}
+@keyframes beat{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.leadname{font-size:clamp(32px,9vw,54px);word-break:break-word}
+.leadtime{margin-top:10px;background:var(--c);color:var(--n);font-weight:800;font-size:22px;padding:6px 18px;border-radius:999px;font-variant-numeric:tabular-nums}
+.ticker{position:absolute;left:0;right:0;bottom:0;background:var(--c);color:var(--n);border-top:3px solid var(--n);overflow:hidden;white-space:nowrap;height:40px;display:flex;align-items:center}
+.ticker .track{display:inline-block;animation:marquee 9s linear infinite;font-size:20px}
+.ticker .track span{padding:0 18px}
+@keyframes marquee{to{transform:translateX(-50%)}}
+.ticker.top{top:0;bottom:auto;border-top:0;border-bottom:3px solid var(--n)}
+.ticker.top .track{animation-direction:reverse}
+.confetti{position:absolute;top:-20px;width:10px;height:16px;background:var(--c);animation:fall linear infinite;opacity:.9}
+@keyframes fall{to{transform:translateY(620px) rotate(540deg)}}
+
+/* Podio 2 y 3 */
+.podium{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.pod{border:3px solid var(--n);border-radius:22px;padding:16px;position:relative;overflow:hidden;min-height:150px;display:flex;flex-direction:column;justify-content:flex-end}
+.pod.p2{background:var(--n);color:var(--c)}
+.pod .pos{position:absolute;top:6px;right:12px;font-size:76px;opacity:.95}
+.pod.p3 .pos{-webkit-text-stroke:2px var(--n);color:transparent}
+.pod.p2 .pos{-webkit-text-stroke:2px var(--c);color:transparent}
+.pod .nm{font-size:28px;word-break:break-word;margin-top:30px}
+.pod .tm{font-weight:800;font-size:18px;margin-top:6px;font-variant-numeric:tabular-nums}
+
+/* Resto */
+.list{margin:20px 0 30px;border-top:3px solid var(--n)}
+.row{display:grid;grid-template-columns:44px 1fr auto auto;gap:10px;align-items:center;padding:14px 4px;border-bottom:2px solid var(--n)}
+.row .n{font-family:Anton,sans-serif;font-style:italic;font-size:24px}
+.row .who{font-weight:800;font-size:17px;word-break:break-word}
+.row .who small{display:block;font-weight:400;font-size:12px}
+.row .t{font-weight:800;font-variant-numeric:tabular-nums;font-size:17px}
+.del{border:2px solid var(--n);background:var(--c);border-radius:50%;width:30px;height:30px;font-weight:800;cursor:pointer;display:none}
+body.admin .del{display:inline-grid;place-items:center}
+body.admin .row{grid-template-columns:44px 1fr auto auto}
+.pod .del,.leader .del{position:absolute;z-index:3}
+.leader .del{top:52px;right:14px;background:var(--c);color:var(--n)}
+.pod .del{bottom:12px;right:12px}
+.pod.p2 .del{background:var(--n);color:var(--c);border-color:var(--c)}
+
+/* Botón flotante */
+.fab{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom));z-index:30;background:var(--n);color:var(--c);border:3px solid var(--n);border-radius:999px;padding:16px 22px;font-weight:800;font-size:16px;box-shadow:0 0 0 4px var(--c);cursor:pointer}
+
+/* Modal */
+.modal{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.6);display:none;align-items:flex-end;justify-content:center}
+.modal.open{display:flex}
+@media(min-width:620px){.modal{align-items:center}}
+.sheet{background:var(--c);width:100%;max-width:520px;border:3px solid var(--n);border-radius:26px 26px 0 0;padding:22px 20px calc(22px + env(safe-area-inset-bottom));max-height:92vh;overflow:auto}
+@media(min-width:620px){.sheet{border-radius:26px}}
+.sheet h3{font-size:38px;margin-bottom:14px}
+label{display:block;font-weight:800;font-size:13px;text-transform:uppercase;letter-spacing:.06em;margin:14px 0 6px}
+input,select,textarea{width:100%;background:var(--c);border:3px solid var(--n);border-radius:14px;padding:13px 14px;font-size:17px;outline:none}
+input:focus,select:focus,textarea:focus{box-shadow:0 0 0 3px var(--c),0 0 0 6px var(--n)}
+.time3{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:6px;align-items:center}
+.time3 b{font-size:22px}
+.time3 input{text-align:center;font-variant-numeric:tabular-nums}
+.hint{font-size:13px;margin-top:6px}
+.actions{display:flex;gap:10px;margin-top:20px}
+.btn{flex:1;border:3px solid var(--n);border-radius:999px;padding:14px;font-weight:800;font-size:16px;cursor:pointer;background:var(--c)}
+.btn.solid{background:var(--n);color:var(--c)}
+.btn:disabled{opacity:.5}
+.err{margin-top:12px;font-weight:800;display:none;border:3px solid var(--n);border-radius:12px;padding:10px}
+.toast{position:fixed;left:50%;top:80px;transform:translateX(-50%);background:var(--n);color:var(--c);padding:12px 20px;border-radius:999px;font-weight:800;z-index:60;display:none}
+.demo{background:var(--n);color:var(--c);text-align:center;font-size:13px;font-weight:600;padding:6px 10px}
+.loading{padding:60px 0;text-align:center;font-weight:800}
+.muted{opacity:.85}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+<div id="demoBar" class="demo" hidden>Modo prueba: los datos solo se guardan en este navegador. Contraseña de prueba: <b>own</b></div>
+<header>
+  <div class="wrap head">
+    <button class="brand" type="button" data-go="" aria-label="OWN Retos, inicio"><svg class="logo" viewBox="0 0 1418 537" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="OWN"><path fill="#000000" fill-rule="evenodd" d="M82 536C40 530 13 508 3 471C0 460 -1 434 1 416C4 400 12 333 14 317C14 310 16 301 16 297C17 293 18 282 19 273C22 250 24 231 30 182C33 160 36 136 36 129C42 81 54 55 78 32C93 18 110 9 136 3C144 1 145 1 307 0C484 0 478 0 497 6C530 16 550 39 556 73C558 86 557 112 554 138C552 149 549 173 547 191C545 209 541 239 539 256C535 288 531 324 522 392C520 412 517 433 516 438C504 491 470 524 418 535C409 536 400 536 249 537C161 537 86 536 82 536ZM548 536C548 535 548 531 549 526C550 521 552 495 554 470C557 444 560 416 560 408C561 399 563 381 564 366C566 351 568 333 568 324C569 316 573 281 576 246C579 212 582 179 583 174C596 34 597 29 598 12C599 9 599 5 600 3L600 0L656 0L712 0L712 6C711 10 710 26 708 44C703 92 702 104 700 132C698 147 696 168 695 179C694 190 692 204 692 210C691 215 688 245 685 277C682 309 680 339 679 344C676 380 675 387 675 389C675 390 677 382 679 371C680 360 684 341 686 329C688 317 691 297 693 286C695 274 700 249 703 230C706 210 711 185 713 174C714 162 717 146 719 138C724 109 725 102 728 81C732 61 737 33 741 10L742 0L842 0L942 0L942 2C941 4 940 19 938 37C936 55 934 81 932 95C931 109 929 132 928 146C926 160 924 181 923 193C922 205 920 226 918 240C917 253 914 281 912 302C911 322 908 343 908 348C904 384 904 391 904 392C904 392 905 387 906 382C908 372 910 358 920 304C927 263 932 234 936 208C943 165 955 98 958 80C959 74 962 55 966 36C969 18 971 3 972 2C972 0 976 0 1036 0C1087 0 1100 0 1100 1C1099 3 1096 16 1083 72C1082 78 1078 91 1076 101C1074 111 1063 156 1052 202C1042 249 1032 290 1031 294C1030 299 1026 316 1022 334C1013 372 1013 373 1003 414C999 433 991 468 985 493L975 537L876 537L777 537L780 514C781 501 783 479 784 464C786 449 787 433 788 428C788 422 792 389 795 354C798 320 802 287 802 282C802 277 804 256 806 236C808 215 810 197 810 196C811 194 811 193 810 193C810 194 807 208 798 258C796 268 792 287 790 300C787 314 783 333 782 342C780 352 775 375 772 392C769 410 764 433 762 442C761 452 757 471 754 484C752 498 749 515 747 523L745 537L646 537C577 537 548 537 548 536ZM1021 535C1022 534 1032 492 1038 464C1040 458 1044 439 1049 420C1053 402 1066 350 1076 305C1087 260 1098 216 1100 208C1104 188 1108 175 1112 156C1116 139 1121 117 1128 92C1130 83 1133 68 1136 58C1143 26 1147 10 1148 5L1149 0L1183 0L1217 0L1217 4C1218 7 1218 12 1219 16C1220 26 1224 53 1232 112C1239 166 1243 196 1245 208C1246 216 1259 310 1262 336C1264 346 1265 355 1265 356C1265 356 1266 355 1266 354C1267 350 1277 308 1280 293C1282 288 1286 268 1291 250C1295 231 1304 196 1310 172C1329 89 1330 85 1342 38C1345 22 1349 7 1349 5L1350 0L1384 0L1418 0L1416 6C1416 9 1406 50 1394 98C1383 146 1373 189 1372 194C1370 199 1367 214 1364 228C1360 241 1357 256 1356 261C1352 278 1316 426 1310 452C1307 465 1301 490 1297 507L1290 537L1256 537C1229 537 1222 537 1222 536C1222 535 1222 531 1221 528C1220 524 1220 517 1219 514C1218 510 1217 498 1216 488C1214 477 1212 465 1212 462C1212 458 1210 446 1209 436C1199 366 1194 326 1184 250C1179 214 1174 184 1174 183C1174 182 1168 202 1161 235C1154 264 1144 303 1140 322C1136 340 1131 359 1130 364C1128 370 1124 390 1119 409C1114 428 1110 448 1108 453C1107 458 1103 477 1099 494C1095 511 1091 528 1090 531L1088 537L1055 537C1023 537 1021 537 1021 535ZM272 388C272 387 273 377 274 364C278 337 280 315 288 249C293 212 295 197 298 175C299 163 300 152 301 150L301 147L294 147L286 148L285 161C284 168 282 188 280 204C273 258 270 283 268 304C266 314 264 337 262 352C260 368 258 383 258 385L257 389L264 389C269 389 271 389 272 388Z"/></svg><span class="display">Retos</span></button>
+    <button class="iconbtn" id="lockBtn" aria-label="Modo administrador">🔒</button>
+  </div>
+</header>
+
+<main class="wrap" id="app"><div class="loading">Cargando…</div></main>
+
+<button class="fab" id="fab" hidden>+ Añadir</button>
+
+<!-- Modal añadir resultado -->
+<div class="modal" id="mResult"><div class="sheet">
+  <h3 class="display">Nuevo resultado</h3>
+  <label for="rReto">Reto</label>
+  <select id="rReto"></select>
+  <label for="rName">Nombre</label>
+  <input id="rName" autocomplete="off" placeholder="Nombre y apellido">
+  <div id="rTimeBox">
+    <label>Tiempo</label>
+    <div class="time3">
+      <input id="rH" inputmode="numeric" placeholder="h" maxlength="2"><b>:</b>
+      <input id="rM" inputmode="numeric" placeholder="min" maxlength="2"><b>:</b>
+      <input id="rS" inputmode="decimal" placeholder="seg" maxlength="5">
+    </div>
+    <div class="hint">Horas · minutos · segundos (admite decimales, p. ej. 42.5)</div>
+  </div>
+  <div id="rNumBox" hidden>
+    <label for="rNum" id="rNumLabel">Resultado</label>
+    <input id="rNum" inputmode="decimal" placeholder="0">
+  </div>
+  <div class="pwbox">
+    <label for="rPw">Contraseña</label>
+    <input id="rPw" type="password" autocomplete="current-password">
+  </div>
+  <div class="err" id="rErr"></div>
+  <div class="actions"><button class="btn" data-close>Cancelar</button><button class="btn solid" id="rSave">Guardar</button></div>
+</div></div>
+
+<!-- Modal nuevo reto -->
+<div class="modal" id="mReto"><div class="sheet">
+  <h3 class="display">Nuevo reto</h3>
+  <label for="tName">Nombre del reto</label>
+  <input id="tName" placeholder="Ej. 1000 m remo">
+  <label for="tDesc">Descripción corta</label>
+  <input id="tDesc" placeholder="Ej. Lo más rápido posible">
+  <label for="tType">Se gana con…</label>
+  <select id="tType">
+    <option value="tiempo">Menos tiempo</option>
+    <option value="mas">Más cantidad (reps, kg, metros…)</option>
+  </select>
+  <div id="tUnitBox" hidden>
+    <label for="tUnit">Unidad</label>
+    <input id="tUnit" placeholder="reps, kg, m…">
+  </div>
+  <label for="tImg">Imagen (enlace, opcional)</label>
+  <input id="tImg" placeholder="img/remo.jpg o https://…">
+  <div class="hint">Si lo dejas vacío, se crea una portada tipográfica automática.</div>
+  <div class="pwbox">
+    <label for="tPw">Contraseña</label>
+    <input id="tPw" type="password" autocomplete="current-password">
+  </div>
+  <div class="err" id="tErr"></div>
+  <div class="actions"><button class="btn" data-close>Cancelar</button><button class="btn solid" id="tSave">Crear reto</button></div>
+</div></div>
+
+<!-- Modal contraseña -->
+<div class="modal" id="mLock"><div class="sheet">
+  <h3 class="display">Modo admin</h3>
+  <p class="muted">Con la contraseña puedes añadir resultados, crear retos y borrar entradas.</p>
+  <label for="lPw">Contraseña</label>
+  <input id="lPw" type="password" autocomplete="current-password">
+  <div class="err" id="lErr"></div>
+  <div class="actions"><button class="btn" data-close>Cancelar</button><button class="btn solid" id="lGo">Entrar</button></div>
+</div></div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* =========================================================
+   CONFIGURACIÓN
+   Pega aquí la URL de tu Apps Script (termina en /exec).
+   Si está vacía, la web funciona en "modo prueba" local.
+   ========================================================= */
+const API_URL = "https://script.google.com/macros/s/AKfycbyQUB6yEzJ_plCJb0EezsaiikIuTC28ZbV7W76Jdsqg5K_rSKlpSeYNHhapDlghoP-0/exec";
+
+/* ---------- utilidades ---------- */
+const $ = s => document.querySelector(s);
+const app = $("#app");
+const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const store = {
+  get(k){ try{ return sessionStorage.getItem(k) }catch(e){ return null } },
+  set(k,v){ try{ sessionStorage.setItem(k,v) }catch(e){} },
+  del(k){ try{ sessionStorage.removeItem(k) }catch(e){} }
+};
+const local = {
+  get(k){ try{ return JSON.parse(localStorage.getItem(k)) }catch(e){ return null } },
+  set(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)) }catch(e){} }
+};
+function toast(msg){ const t=$("#toast"); t.textContent=msg; t.style.display="block"; clearTimeout(t._h); t._h=setTimeout(()=>t.style.display="none",2200); }
+function safeImg(u){ u=String(u||"").trim(); if(!u) return ""; if(/^https:\/\//i.test(u)) return u; if(/^[\w\-./]+$/.test(u) && !u.includes("..")) return u; return ""; }
+
+function fmtTime(sec){
+  sec = Number(sec); if(!isFinite(sec)) return "–";
+  const h = Math.floor(sec/3600), m = Math.floor(sec%3600/60), s = sec - h*3600 - m*60;
+  const ss = (Math.round(s*100)/100);
+  let sStr = Number.isInteger(ss) ? String(ss).padStart(2,"0") : ss.toFixed(2).padStart(5,"0").replace(/0$/,"");
+  if(h) return `${h}:${String(m).padStart(2,"0")}:${sStr}`;
+  return `${String(m).padStart(2,"0")}:${sStr}`;
+}
+function fmtVal(reto,v){ return reto.tipo==="tiempo" ? fmtTime(v) : `${Number(v).toLocaleString("es-ES")} ${reto.unidad||""}`.trim(); }
+
+/* ---------- capa de datos ---------- */
+let DATA = { retos:[], resultados:[] };
+const DEMO = !API_URL;
+
+function demoSeed(){
+  return {
+    retos:[
+      {id:"r1",nombre:"1000 m remo",descripcion:"Lo más rápido posible",tipo:"tiempo",unidad:"",imagen:""},
+      {id:"r2",nombre:"100 burpees",descripcion:"Por tiempo, sin parar el reloj",tipo:"tiempo",unidad:"",imagen:""},
+      {id:"r3",nombre:"Dominadas",descripcion:"Máximas repeticiones seguidas",tipo:"mas",unidad:"reps",imagen:""}
+    ],
+    resultados:[
+      {id:"a1",retoId:"r1",nombre:"Laura G.",valor:208.4,fecha:"2026-11-20"},
+      {id:"a2",retoId:"r1",nombre:"Marc R.",valor:214.9,fecha:"2026-11-21"},
+      {id:"a3",retoId:"r1",nombre:"Paco M.",valor:219.0,fecha:"2026-11-22"},
+      {id:"a4",retoId:"r1",nombre:"Ana T.",valor:231.2,fecha:"2026-11-23"},
+      {id:"a5",retoId:"r1",nombre:"Joan P.",valor:245,fecha:"2026-11-24"},
+      {id:"a6",retoId:"r2",nombre:"Sergio L.",valor:412,fecha:"2026-11-20"},
+      {id:"a7",retoId:"r2",nombre:"Marta V.",valor:438.5,fecha:"2026-11-21"},
+      {id:"a8",retoId:"r3",nombre:"Dani S.",valor:24,fecha:"2026-11-22"},
+      {id:"a9",retoId:"r3",nombre:"Laura G.",valor:17,fecha:"2026-11-22"}
+    ]
+  };
+}
+
+async function load(){
+  if(DEMO){ DATA = local.get("ownretos_demo") || demoSeed(); return; }
+  const ctrl = new AbortController(); const tm = setTimeout(()=>ctrl.abort(), 12000);
+  try{
+    const r = await fetch(API_URL + "?t=" + Date.now(), {signal:ctrl.signal});
+    const j = await r.json();
+    if(!j.ok) throw new Error(j.error||"Error");
+    DATA = { retos:j.retos||[], resultados:j.resultados||[] };
+    local.set("ownretos_cache", DATA);
+  }catch(e){
+    const c = local.get("ownretos_cache");
+    if(c){ DATA = c; toast("Sin conexión: mostrando la última copia"); }
+    else throw e;
+  }finally{ clearTimeout(tm); }
+}
+
+async function api(accion, payload, clave){
+  if(DEMO){
+    if(clave !== "own") return {ok:false,error:"Contraseña incorrecta"};
+    const id = Math.random().toString(36).slice(2,10);
+    if(accion==="check") return {ok:true};
+    if(accion==="addResultado") DATA.resultados.push({id, fecha:new Date().toISOString().slice(0,10), ...payload});
+    if(accion==="addReto") DATA.retos.push({id, ...payload});
+    if(accion==="delResultado") DATA.resultados = DATA.resultados.filter(x=>x.id!==payload.id);
+    local.set("ownretos_demo", DATA); return {ok:true};
+  }
+  const r = await fetch(API_URL, {method:"POST", body: JSON.stringify({accion, clave, ...payload})});
+  return r.json();
+}
+
+/* ---------- ranking ---------- */
+function ranking(reto){
+  const asc = reto.tipo === "tiempo";
+  const best = new Map();
+  DATA.resultados.filter(x=>String(x.retoId)===String(reto.id)).forEach(x=>{
+    const key = String(x.nombre).trim().toLowerCase();
+    const v = Number(x.valor); if(!isFinite(v)) return;
+    const cur = best.get(key);
+    if(!cur || (asc ? v < cur.valor : v > cur.valor)) best.set(key, {...x, valor:v});
+  });
+  return [...best.values()].sort((a,b)=> asc ? a.valor-b.valor : b.valor-a.valor);
+}
+
+/* ---------- portadas automáticas (solo negro y crema) ---------- */
+function autoArt(i){
+  const pats = [
+    `<svg class="art" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice"><defs><pattern id="p${i}" width="28" height="28" patternUnits="userSpaceOnUse" patternTransform="rotate(-20)"><rect width="12" height="28" fill="#FFF7E5"/></pattern></defs><rect width="400" height="500" fill="#000"/><circle cx="300" cy="140" r="190" fill="url(#p${i})"/></svg>`,
+    `<svg class="art" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice"><rect width="400" height="500" fill="#000"/>${Array.from({length:9},(_,k)=>`<circle cx="320" cy="90" r="${40+k*42}" fill="none" stroke="#FFF7E5" stroke-width="10"/>`).join("")}</svg>`,
+    `<svg class="art" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice"><rect width="400" height="500" fill="#000"/>${Array.from({length:12},(_,k)=>`<polygon points="${-200+k*70},0 ${-160+k*70},0 ${40+k*70},500 ${0+k*70},500" fill="#FFF7E5"/>`).join("")}<rect y="250" width="400" height="250" fill="#000" opacity=".55"/></svg>`,
+    `<svg class="art" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice"><rect width="400" height="500" fill="#000"/>${Array.from({length:10},(_,r)=>Array.from({length:8},(_,c)=>`<circle cx="${c*55+20}" cy="${r*55+20}" r="${(10-r)*2.2+4}" fill="#FFF7E5"/>`).join("")).join("")}</svg>`
+  ];
+  return pats[i % pats.length];
+}
+
+/* ---------- vistas ---------- */
+function renderHome(keep){
+  $("#fab").hidden = !isAdmin();
+  $("#fab").textContent = "+ Nuevo reto";
+  $("#fab").onclick = openReto;
+  const cards = DATA.retos.map((r,i)=>{
+    const rk = ranking(r); const lead = rk[0];
+    const img = safeImg(r.imagen);
+    return `<a class="card" href="#reto-${esc(r.id)}" data-go="${esc(r.id)}">
+      ${img ? `<img src="${esc(img)}" alt="" loading="lazy">` : autoArt(i)}
+      <div class="shade"></div>
+      <div class="go">→</div>
+      <div class="info">
+        <span class="tag">${rk.length} ${rk.length===1?"participante":"participantes"}</span>
+        <h2 class="display">${esc(r.nombre)}</h2>
+        <div class="meta"><span>${esc(r.descripcion||"")}</span><span>${lead?"👑 "+esc(lead.nombre):""}</span></div>
+      </div></a>`;
+  }).join("");
+  app.innerHTML = `
+    <section class="hero"><h1 class="display">Elige<br>tu reto</h1><p>Pincha en un reto para ver el ranking. ¿Te atreves a entrar en el podio?</p></section>
+    <section class="grid">${cards || `<div class="empty">Todavía no hay retos.${isAdmin()?" Crea el primero con el botón de abajo.":" Entra en modo admin (🔒) para crear el primero."}</div>`}</section>`;
+  if(!keep) window.scrollTo(0,0);
+}
+
+function confettiHTML(){
+  return Array.from({length:14},(_,k)=>{
+    const left = (k*37)%100, dur = 3.5 + (k%5)*.7, delay = (k*0.45)%4, w = 6 + (k%3)*4;
+    return `<i class="confetti" style="left:${left}%;width:${w}px;animation-duration:${dur}s;animation-delay:-${delay}s"></i>`;
+  }).join("");
+}
+
+function delBtn(id){ return `<button class="del" data-del="${esc(id)}" aria-label="Borrar">×</button>`; }
+
+function renderReto(id,keep){
+  const reto = DATA.retos.find(r=>String(r.id)===String(id));
+  if(!reto){ CUR=""; renderHome(keep); return; }
+  $("#fab").hidden = false;
+  $("#fab").textContent = "+ Añadir resultado";
+  $("#fab").onclick = ()=>openResult(reto.id);
+  const rk = ranking(reto);
+  const [p1,p2,p3,...rest] = rk;
+  const tick = p1 ? Array.from({length:6},()=>`<span>VA GANANDO ★ ${esc(p1.nombre)} ★</span>`).join("") : "";
+  const crown = `<svg class="crown" viewBox="0 0 100 70"><path d="M8 62 L4 16 L28 36 L50 6 L72 36 L96 16 L92 62 Z" fill="#FFF7E5" stroke="#000" stroke-width="3"/><circle cx="4" cy="14" r="6" fill="#FFF7E5"/><circle cx="50" cy="5" r="6" fill="#FFF7E5"/><circle cx="96" cy="14" r="6" fill="#FFF7E5"/></svg>`;
+  app.innerHTML = `
+    <div class="back"><button class="iconbtn" type="button" data-go="">← Retos</button></div>
+    <h1 class="display rtitle">${esc(reto.nombre)}</h1>
+    ${reto.descripcion?`<p class="rdesc">${esc(reto.descripcion)}</p>`:""}
+    <div class="stats"><span class="pill">${rk.length} ${rk.length===1?"participante":"participantes"}</span><span class="pill">${reto.tipo==="tiempo"?"Gana el más rápido":"Gana quien hace más"}</span></div>
+    ${p1 ? `
+    <section class="leader" aria-label="Primer puesto">
+      <div class="rays"></div>${confettiHTML()}
+      <div class="ticker top display"><div class="track">${tick}${tick}</div></div>
+      <div class="leadin">
+        ${crown}
+        <div class="bigone display">1</div>
+        <div class="namebox"><div class="leadname display">${esc(p1.nombre)}</div></div>
+        <div class="leadtime">${esc(fmtVal(reto,p1.valor))}</div>
+      </div>
+      <div class="ticker display"><div class="track">${tick}${tick}</div></div>
+      ${delBtn(p1.id)}
+    </section>` : `<div class="empty" style="margin-top:22px">Aún no hay resultados. ¡El primero se lleva la corona! 👑</div>`}
+    ${(p2||p3) ? `<section class="podium">
+      ${p2?`<div class="pod p2"><div class="pos display">2</div><div class="nm display">${esc(p2.nombre)}</div><div class="tm">${esc(fmtVal(reto,p2.valor))}</div>${delBtn(p2.id)}</div>`:"<div></div>"}
+      ${p3?`<div class="pod p3"><div class="pos display">3</div><div class="nm display">${esc(p3.nombre)}</div><div class="tm">${esc(fmtVal(reto,p3.valor))}</div>${delBtn(p3.id)}</div>`:"<div></div>"}
+    </section>`:""}
+    ${rest.length ? `<section class="list">${rest.map((x,i)=>`
+      <div class="row"><span class="n">${i+4}</span><span class="who">${esc(x.nombre)}${x.fecha?`<small>${esc(String(x.fecha).slice(0,10).split("-").reverse().join("/"))}</small>`:""}</span><span class="t">${esc(fmtVal(reto,x.valor))}</span>${delBtn(x.id)}</div>`).join("")}</section>`:""}
+    <div style="height:90px"></div>`;
+  if(!keep) window.scrollTo(0,0);
+}
+
+/* Navegación: no depende de los enlaces #, funciona también dentro de Claude */
+let CUR = (()=>{ try{ const m=location.hash.match(/^#reto-(.+)$/); return m?decodeURIComponent(m[1]):""; }catch(e){ return ""; } })();
+function go(id){
+  CUR = id || "";
+  try{ history.replaceState(null,"", CUR ? "#reto-"+encodeURIComponent(CUR) : location.pathname + location.search); }catch(e){}
+  route();
+}
+document.addEventListener("click", e=>{
+  const g = e.target.closest("[data-go]"); if(!g) return;
+  e.preventDefault(); go(g.dataset.go);
+});
+function route(keep){
+  if(CUR) renderReto(CUR,keep); else renderHome(keep);
+}
+
+/* ---------- admin / contraseña ---------- */
+const isAdmin = () => !!store.get("ownretos_pw");
+function syncAdmin(){
+  document.body.classList.toggle("admin", isAdmin());
+  $("#lockBtn").textContent = isAdmin() ? "🔓 Salir" : "🔒";
+  $("#lockBtn").classList.toggle("solid", isAdmin());
+  document.querySelectorAll(".pwbox").forEach(b=> b.hidden = isAdmin());
+}
+function openModal(id){ $(id).classList.add("open"); }
+function closeModals(){ document.querySelectorAll(".modal").forEach(m=>m.classList.remove("open")); document.querySelectorAll(".err").forEach(e=>e.style.display="none"); }
+function showErr(id,msg){ const e=$(id); e.textContent=msg; e.style.display="block"; }
+document.querySelectorAll(".modal").forEach(m=>m.addEventListener("click",e=>{ if(e.target===m || e.target.hasAttribute("data-close")) closeModals(); }));
+
+$("#lockBtn").onclick = ()=>{
+  if(isAdmin()){ store.del("ownretos_pw"); syncAdmin(); route(); toast("Modo admin cerrado"); return; }
+  $("#lPw").value=""; openModal("#mLock"); setTimeout(()=>$("#lPw").focus(),50);
+};
+$("#lGo").onclick = async ()=>{
+  const pw = $("#lPw").value; if(!pw) return showErr("#lErr","Escribe la contraseña");
+  $("#lGo").disabled = true;
+  try{
+    const r = await api("check", {}, pw);
+    if(!r.ok) return showErr("#lErr", r.error||"Contraseña incorrecta");
+    store.set("ownretos_pw", pw); syncAdmin(); closeModals(); route(); toast("Modo admin activado");
+  }catch(e){ showErr("#lErr","No se pudo conectar. Inténtalo de nuevo."); }
+  finally{ $("#lGo").disabled = false; }
+};
+$("#lPw").addEventListener("keydown",e=>{ if(e.key==="Enter") $("#lGo").click(); });
+
+function pwFrom(inputId){ return store.get("ownretos_pw") || $(inputId).value; }
+
+/* ---------- añadir resultado ---------- */
+function updateResultFields(){
+  const reto = DATA.retos.find(r=>String(r.id)===$("#rReto").value);
+  const isT = !reto || reto.tipo==="tiempo";
+  $("#rTimeBox").hidden = !isT; $("#rNumBox").hidden = isT;
+  if(reto && !isT) $("#rNumLabel").textContent = "Resultado" + (reto.unidad?` (${reto.unidad})`:"");
+}
+function openResult(retoId){
+  $("#rReto").innerHTML = DATA.retos.map(r=>`<option value="${esc(r.id)}">${esc(r.nombre)}</option>`).join("");
+  $("#rReto").value = retoId;
+  ["#rName","#rH","#rM","#rS","#rNum"].forEach(s=>$(s).value="");
+  updateResultFields(); syncAdmin(); openModal("#mResult"); setTimeout(()=>$("#rName").focus(),50);
+}
+$("#rReto").onchange = updateResultFields;
+$("#rSave").onclick = async ()=>{
+  const reto = DATA.retos.find(r=>String(r.id)===$("#rReto").value);
+  const nombre = $("#rName").value.trim().slice(0,40);
+  if(!nombre) return showErr("#rErr","Falta el nombre");
+  let valor;
+  if(reto.tipo==="tiempo"){
+    const h = Number(($("#rH").value||"0").replace(",",".")), m = Number(($("#rM").value||"0").replace(",",".")), s = Number(($("#rS").value||"0").replace(",","."));
+    if([h,m,s].some(x=>!isFinite(x)||x<0)) return showErr("#rErr","Revisa el tiempo: solo números");
+    if(m>=60 || s>=60) return showErr("#rErr","Minutos y segundos deben ser menores de 60");
+    valor = Math.round((h*3600+m*60+s)*100)/100;
+    if(valor<=0) return showErr("#rErr","Escribe el tiempo");
+  }else{
+    valor = Number(($("#rNum").value||"").replace(",","."));
+    if(!isFinite(valor) || $("#rNum").value==="") return showErr("#rErr","Escribe el resultado");
+  }
+  const pw = pwFrom("#rPw"); if(!pw) return showErr("#rErr","Escribe la contraseña");
+  $("#rSave").disabled = true;
+  try{
+    const r = await api("addResultado", {retoId:reto.id, nombre, valor}, pw);
+    if(!r.ok) return showErr("#rErr", r.error||"No se pudo guardar");
+    store.set("ownretos_pw", pw); syncAdmin();
+    closeModals(); await load(); go(reto.id);
+    const pos = ranking(reto).findIndex(x=>x.nombre.trim().toLowerCase()===nombre.toLowerCase())+1;
+    toast(pos===1 ? `👑 ¡${nombre} pasa a liderar!` : `Guardado · ${nombre} va ${pos}º`);
+  }catch(e){ showErr("#rErr","No se pudo conectar. Inténtalo de nuevo."); }
+  finally{ $("#rSave").disabled = false; }
+};
+
+/* ---------- nuevo reto ---------- */
+function openReto(){
+  ["#tName","#tDesc","#tUnit","#tImg"].forEach(s=>$(s).value=""); $("#tType").value="tiempo"; $("#tUnitBox").hidden=true;
+  syncAdmin(); openModal("#mReto"); setTimeout(()=>$("#tName").focus(),50);
+}
+$("#tType").onchange = ()=> $("#tUnitBox").hidden = $("#tType").value==="tiempo";
+$("#tSave").onclick = async ()=>{
+  const nombre = $("#tName").value.trim().slice(0,40);
+  if(!nombre) return showErr("#tErr","Falta el nombre del reto");
+  const pw = pwFrom("#tPw"); if(!pw) return showErr("#tErr","Escribe la contraseña");
+  $("#tSave").disabled = true;
+  try{
+    const r = await api("addReto", {nombre, descripcion:$("#tDesc").value.trim().slice(0,80), tipo:$("#tType").value, unidad:$("#tUnit").value.trim().slice(0,12), imagen:$("#tImg").value.trim()}, pw);
+    if(!r.ok) return showErr("#tErr", r.error||"No se pudo crear");
+    store.set("ownretos_pw", pw); syncAdmin(); closeModals(); await load(); route(); toast("Reto creado");
+  }catch(e){ showErr("#tErr","No se pudo conectar. Inténtalo de nuevo."); }
+  finally{ $("#tSave").disabled = false; }
+};
+
+/* ---------- borrar ---------- */
+app.addEventListener("click", async e=>{
+  const b = e.target.closest("[data-del]"); if(!b) return;
+  if(!confirmDel(b)) return;
+  b.disabled = true;
+  try{
+    const r = await api("delResultado", {id:b.dataset.del}, store.get("ownretos_pw"));
+    if(!r.ok){ toast(r.error||"No se pudo borrar"); return; }
+    await load(); route(); toast("Borrado");
+  }catch(err){ toast("No se pudo conectar"); }
+});
+/* Confirmación en dos toques (sin ventanas emergentes del navegador) */
+function confirmDel(b){
+  if(b.dataset.armed){ return true; }
+  b.dataset.armed = "1"; b.textContent = "¿?"; toast("Toca otra vez para borrar");
+  setTimeout(()=>{ delete b.dataset.armed; b.textContent="×"; }, 2500);
+  return false;
+}
+
+/* ---------- arranque ---------- */
+window.addEventListener("hashchange", ()=>{ const m=location.hash.match(/^#reto-(.+)$/); CUR = m?decodeURIComponent(m[1]):""; route(); });
+document.addEventListener("keydown", e=>{ if(e.key==="Escape") closeModals(); });
+(async ()=>{
+  if(DEMO) $("#demoBar").hidden = false;
+  syncAdmin();
+  try{ await load(); route(); }
+  catch(e){ app.innerHTML = `<div class="loading">No se han podido cargar los retos.<br><br><button class="iconbtn" onclick="location.reload()">Reintentar</button></div>`; }
+  // refresco automático cada 60 s
+  setInterval(async ()=>{ if(document.hidden || document.querySelector(".modal.open")) return; try{ await load(); route(true); }catch(e){} }, 60000);
+})();
+</script>
+</body>
+</html>
